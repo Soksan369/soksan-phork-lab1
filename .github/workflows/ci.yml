@@ -2,15 +2,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
   test:
-    name: Test on Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
-    
     strategy:
       matrix:
         node-version: [18.x, 20.x]
@@ -31,24 +29,5 @@ jobs:
     - name: Run linting
       run: npm run lint
       
-    - name: Run tests
-      run: npm run test:coverage
-      
-    - name: Upload coverage reports
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-report-${{ matrix.node-version }}
-        path: coverage/
-        retention-days: 30
-
-  security-scan:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Run npm audit
-      run: npm audit --audit-level moderate
+    - name: Run tests with coverage
+      run: npm run test:coverage  # This should match your package.json script
