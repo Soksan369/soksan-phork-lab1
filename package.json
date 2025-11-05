@@ -8,9 +8,22 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "test": "mocha --exit",
-    "test:coverage": "nyc mocha --exit",
+    "test:coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --exit",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix"
+  },
+  "nyc": {
+    "exclude": [
+      "test/**",
+      "coverage/**",
+      ".github/**"
+    ],
+    "reporter": [
+      "html",
+      "text",
+      "lcov"
+    ],
+    "all": true
   },
   "repository": {
     "type": "git",
